@@ -1,3 +1,12 @@
 spring:
   application:
     name: RokuganBackend
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      host: localhost
+      user: rokugan_app
+      pass: rokugan
+      database: rokugan_db
+      port: 27017
