@@ -18,8 +18,8 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void deactivateUserById(String id) {
-        repository.deactivateUserById(id);
+    public void deactivateUserByUsername(String id) {
+        repository.deactivateUserByUsername(id);
     }
     
 }

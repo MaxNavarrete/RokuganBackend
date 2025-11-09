@@ -20,8 +20,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public void deactivateUserById(String id) {
-        Query query = new Query(Criteria.where("_id").is(id));
+    public void deactivateUserByUsername(String username) {
+        Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update().set("active", false);
         mongoTemplate.updateFirst(query, update, User.class);
     }

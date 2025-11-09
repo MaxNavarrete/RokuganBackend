@@ -28,9 +28,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PatchMapping(value = "/v1/deactivate-user/{id}")
-    public void deactivateUser(@PathVariable String id) {
-        userService.deactivateUserById(id);
+    @PatchMapping(value = "/v1/deactivate-user/{username}")
+    public void deactivateUser(@PathVariable String username) {
+        userService.deactivateUserByUsername(username);
     }
 
     @PostMapping("/v1/create-user")
