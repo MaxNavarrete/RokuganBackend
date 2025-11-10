@@ -1,11 +1,10 @@
 package com.rokugan.backend.module.user.controller;
 
-import com.mongodb.DuplicateKeyException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rokugan.backend.common.response.ApiResponse;
 import com.rokugan.backend.module.user.entity.User;
 import com.rokugan.backend.module.user.service.UserService;
 
@@ -14,9 +13,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -28,21 +24,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PatchMapping(value = "/v1/deactivate-user/{username}")
-    public void deactivateUser(@PathVariable String username) {
+    @PatchMapping(value = "/v1/user/deactivate/{username}")
+    public ResponseEntity<Void> deactivateUser(@PathVariable String username) {
         userService.deactivateUserByUsername(username);
+        return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/v1/create-user")
-    public ResponseEntity<?> requestMethodName(@RequestBody User user) {
-        try{
-            User savedUser = userService.saveUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
-        }catch (DuplicateKeyException | DataIntegrityViolationException e) {
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "El username o email ya existe");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-        }
+    @PostMapping("/v1/user/create")
+    public ResponseEntity<ApiResponse<User>> requestMethodName(@RequestBody User user) {
+        User savedUser = userService.saveUser(user);
+        ApiResponse<User> response = new ApiResponse<>(true, "User created successfully", savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
 }
