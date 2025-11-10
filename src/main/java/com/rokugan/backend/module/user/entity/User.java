@@ -29,7 +29,6 @@ public class User {
         this.updatedBy = "NEVER";
     }
 
-    // Getters
     public String getId() {
         return id;
     }
@@ -66,7 +65,6 @@ public class User {
         return updatedBy;
     }
 
-    // Setters
     public void setId(String id) {
         this.id = id;
     }
